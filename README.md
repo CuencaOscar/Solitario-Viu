@@ -1,6 +1,6 @@
 <h1>
   Solitario VIU
-  <img src="logo.png" alt="Logo" style="width: 100px; vertical-align: middle;">
+  <img src="logo.png" alt="Logo" style="width: 150px; vertical-align: middle;">
 </h1>
 El Solitario es un juego de cartas que se juega en solitario. El objetivo del juego es ordenar todas las cartas en los mazos receptores en orden descendente, comenzando desde el número 12 y terminando con el número 1.
 
