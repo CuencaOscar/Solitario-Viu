@@ -42,11 +42,11 @@ Este proyecto implementa una versión del juego del Solitario en formato digital
 6. Una vez que hayas completado los 4 palos, habrás ganado el juego.
 
 ## Capturas de pantalla
-<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-<img src="/imagenes/solitario_start.png" alt="Logo" style="width: 350px; vertical-align: middle;">
-<hr>
-<img src="/imagenes/solitario_win.png" alt="Logo" style="width: 350px; vertical-align: middle;">
-</div>
+<p align="center">
+  <img src="/imagenes/solitario_start.png" alt="Logo" width="350px">
+  <hr>
+  <img src="/imagenes/solitario_win.png" alt="Logo" width="350px">
+</p>
 
 
 ## Contribuciones
