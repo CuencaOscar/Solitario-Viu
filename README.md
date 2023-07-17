@@ -41,6 +41,14 @@ Este proyecto implementa una versión del juego del Solitario en formato digital
 5. Continúa moviendo las cartas y apilándolas en los tapetes receptores hasta completar los 4 palos.
 6. Una vez que hayas completado los 4 palos, habrás ganado el juego.
 
+## Capturas de pantalla
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+<img src="/imagenes/solitario_start.png" alt="Logo" style="width: 350px; vertical-align: middle;">
+<hr>
+<img src="/imagenes/solitario_win.png" alt="Logo" style="width: 350px; vertical-align: middle;">
+</div>
+
+
 ## Contribuciones
 
 Las contribuciones son bienvenidas. Si deseas mejorar el juego del Solitario, por favor, sigue los siguientes pasos:
