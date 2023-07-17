@@ -44,10 +44,11 @@ Este proyecto implementa una versión del juego del Solitario en formato digital
 ## Capturas de pantalla
 <p align="center">
   <img src="/imagenes/solitario_start.png" alt="Logo" width="350px">
-  <hr>
+</p>
+<hr>
+<p align="center">
   <img src="/imagenes/solitario_win.png" alt="Logo" width="350px">
 </p>
-
 
 ## Contribuciones
 
