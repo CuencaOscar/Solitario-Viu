@@ -22,7 +22,7 @@ Este proyecto implementa una versión del juego del Solitario en formato digital
 ## Instrucciones de instalación
 
 1. Clona o descarga este repositorio en tu máquina local.
-2. Abre el archivo `index.html` en tu navegador web.
+2. Abre el archivo `solitario.html` en tu navegador web.
 
 ## Uso
 
