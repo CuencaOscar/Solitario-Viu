@@ -3,9 +3,9 @@
 // Array de palos
 let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
-let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+// let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-// let numeros = [9, 10, 11, 12];
+let numeros = [9, 10, 11, 12];
 // Array ed objetos para definir colores
 let colores = {
   viu: "naranja",
@@ -177,6 +177,10 @@ function arrancarTiempo() {
     setContador(contTiempo, tiempo);
     segundos++;
     contTiempo.textContent = tiempo;
+    if (mazoInicial.length === 0 && mazoSobrantes.length === 0) {
+      clearInterval(temporizador);
+      modalVictoria();
+    }
   };
   segundos = 0;
   hms(); // Primera visualización 00:00:00
@@ -351,17 +355,13 @@ function moverCarta(tapete, mazo, carta_id, cont, tipo_tapete) {
   if (mazoInicial.length >= 1) {
     document.getElementById("carta-" + mazoInicial.length).draggable = true;
   } else {
-    if (mazoSobrantes.length === 0) {
-      modalVictoria();
-    } else {
-      mazoInicial = mazoSobrantes.slice();
-      mazoSobrantes.splice(0, mazoSobrantes.length);
-      setContador(contInicial, mazoInicial.length);
-      setContador(contSobrantes, mazoSobrantes.length);
-      barajar(mazoInicial);
-      cargarTapeteInicial(mazoInicial);
-      mazo[mazo.length - 1].setAttribute("data-tapete", "receptor");
-    }
+    mazoInicial = mazoSobrantes.slice();
+    mazoSobrantes.splice(0, mazoSobrantes.length);
+    setContador(contInicial, mazoInicial.length);
+    setContador(contSobrantes, mazoSobrantes.length);
+    barajar(mazoInicial);
+    cargarTapeteInicial(mazoInicial);
+    mazo[mazo.length - 1].setAttribute("data-tapete", "receptor");
   }
   setContador(contMovimientos, movimientos);
 }
