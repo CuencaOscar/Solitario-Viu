@@ -3,67 +3,68 @@
 <html>
 
 <head>
-	<title>Solitario VIU</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="css/solitario.css">
+    <title>Solitario VIU</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/solitario.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 </head>
 
 <body>
-	<div class="central">
-		<section>
-			<span class="overlay"></span>
-			<div class="modal-box">
-				<i class="fa-regular fa-circle-check"></i>
-				<h2>Juego Completado</h2>
-				<span id="icono"></span>
-				<h3 id="informacion"></h3>
-				<div class="buttons">
-					<button class="close-btn">Ok, Close</button>
-					<button class="great-btn">Play Again</button>
-				</div>
-			</div>
-		</section>
-		<!-- Título principal -->
+    <div class="central">
+        <section>
+            <span class="overlay"></span>
+            <div class="modal-box">
+                <i class="fa-regular fa-circle-check"></i>
+                <h2>Juego Completado</h2>
+                <span id="icono"></span>
+                <h3 id="informacion"></h3>
+                <div class="buttons">
+                    <button class="close-btn">Ok, Close</button>
+                    <button class="great-btn">Play Again</button>
+                </div>
+            </div>
+        </section>
+        <!-- Título principal -->
 
-		<!--/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
+        <!--/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 			Rellenar h1 e insertar el logo donde proceda
         	-->
-		<div class="cabecera">
-			<h1 id="titulo">Juego del solitario</h1>
-			<img id="logo" src="imagenes/logoVIU.png" alt="">
-		</div>
+        <div class="cabecera">
+            <h1 id="titulo">Juego del solitario</h1>
+            <img id="logo" src="imagenes/logoVIU.png" alt="">
+        </div>
 
-		<!-- Siguiente línea donde se indicará el tiempo transcurrido y la cantidad
+        <!-- Siguiente línea donde se indicará el tiempo transcurrido y la cantidad
 				de movimientos que se han hecho hasta el momento. Estos números se 
 				indicarán en los span internos -->
-		<h2 id="marcadores">
-			<span>Tiempo: <span id="contador_tiempo"></span></span>
-			<span style="display:inline-block; width:200px"></span>
-			<span>Movimientos: <span id="contador_movimientos" class=""></span></span>
-		</h2>
+        <h2 id="marcadores">
+            <span>Tiempo: <span id="contador_tiempo"></span></span>
+            <span style="display:inline-block; width:200px"></span>
+            <span>Movimientos: <span id="contador_movimientos" class=""></span></span>
+        </h2>
 
-		<!-- La "mesa" contendrá los 6 tapetes. En la parte superior dos de ellos 
+        <!-- La "mesa" contendrá los 6 tapetes. En la parte superior dos de ellos 
 				y en la parte inferior los cuatro restantes. Los contadores de los
 				mazos de cartas de cada tapete están indicados oportunamente dentro
 				de elementos span -->
-		<div id="mesa">
-			<div class="tapetes_superiores">
-				<div id="inicial" class="tapete"><span id="contador_inicial" class="contador">0</span></div>
-				<div id="sobrantes" class="tapete"><span id="contador_sobrantes" class="contador">0</span></div>
-			</div>
-			<div id="receptor1" class="tapete receptor"><span id="contador_receptor1" class="contador">0</span></div>
-			<div id="receptor2" class="tapete receptor"><span id="contador_receptor2" class="contador">0</span></div>
-			<div id="receptor3" class="tapete receptor"><span id="contador_receptor3" class="contador">0</span></div>
-			<div id="receptor4" class="tapete receptor"><span id="contador_receptor4" class="contador">0</span></div>
-		</div>
+        <div id="mesa">
+            <div class="tapetes_superiores">
+                <div id="inicial" class="tapete"><span id="contador_inicial" class="contador">0</span></div>
+                <div id="sobrantes" class="tapete"><span id="contador_sobrantes" class="contador">0</span></div>
+            </div>
+            <div id="receptor1" class="tapete receptor"><span id="contador_receptor1" class="contador">0</span></div>
+            <div id="receptor2" class="tapete receptor"><span id="contador_receptor2" class="contador">0</span></div>
+            <div id="receptor3" class="tapete receptor"><span id="contador_receptor3" class="contador">0</span></div>
+            <div id="receptor4" class="tapete receptor"><span id="contador_receptor4" class="contador">0</span></div>
+        </div>
 
-		<!-- Botón de reset que reinicia todo: partida, contadores de tiempo, de movimientos, ... -->
-		<button id="reset" class="btn btn-danger">Reiniciar</button>
-	</div> <!-- class="central" -->
-	<script src="js/solitario.js"></script>
+        <!-- Botón de reset que reinicia todo: partida, contadores de tiempo, de movimientos, ... -->
+        <button id="reset" class="btn btn-danger">Reiniciar</button>
+    </div> <!-- class="central" -->
+    <script src="js/solitario.js"></script>
 </body>
 
 </html>
