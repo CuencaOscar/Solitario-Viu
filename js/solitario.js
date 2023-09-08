@@ -53,7 +53,6 @@ let temporizador = null; // manejador del temporizador
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
 
 // Rutina asociada a boton reset
-/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 function resetearJuego() {
   // Reiniciar variables y elementos a su estado inicial
   mazoInicial.splice(0, mazoInicial.length);
@@ -88,21 +87,13 @@ function resetearJuego() {
 }
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
-/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 window.onload = () => {
   comenzarJuego();
 };
 
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
-  /* Crear baraja, es decir crear el mazoInicial. Este será un array cuyos 
-	elementos serán elementos HTML <img>, siendo cada uno de ellos una carta.
-	Sugerencia: en dos bucles for, bárranse los "palos" y los "numeros", formando
-	oportunamente el nombre del fichero png que contiene a la carta (recuérdese poner
-	el path correcto en la URL asociada al atributo src de <img>). Una vez creado
-	el elemento img, inclúyase como elemento del array mazoInicial. 
-	*/
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
+  //Crear baraja, (mazo inicial)
   for (let i = 0; i < palos.length; i++) {
     for (let j = 0; j < numeros.length; j++) {
       let img_carta = document.createElement("img");
@@ -118,12 +109,10 @@ function comenzarJuego() {
   }
 
   // Barajar y dejar mazoInicial en tapete inicial
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
   barajar(mazoInicial);
   cargarTapeteInicial(mazoInicial);
 
   // Puesta a cero de contadores de mazos
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
   setContador(contInicial, mazoInicial.length);
   setContador(contSobrantes, 0);
   setContador(contReceptor1, 0);
@@ -133,36 +122,10 @@ function comenzarJuego() {
   setContador(contMovimientos, 0);
 
   // Arrancar el conteo de tiempo
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
   arrancarTiempo();
-} // comenzarJuego
-
-/**
-	Se debe encargar de arrancar el temporizador: cada 1000 ms se
-	debe ejecutar una función que a partir de la cuenta autoincrementada
-	de los segundos (segundos totales) visualice el tiempo oportunamente con el 
-	format hh:mm:ss en el contador adecuado.
-
-	Para descomponer los segundos en horas, minutos y segundos pueden emplearse
-	las siguientes igualdades:
-
-	segundos = truncar (   segundos_totales % (60)                 )
-	minutos  = truncar ( ( segundos_totales % (60*60) )     / 60   )
-	horas    = truncar ( ( segundos_totales % (60*60*24)) ) / 3600 )
-
-	donde % denota la operación módulo (resto de la división entre los operadores)
-
-	Así, por ejemplo, si la cuenta de segundos totales es de 134 s, entonces será:
-	   00:02:14
-
-	Como existe la posibilidad de "resetear" el juego en cualquier momento, hay que 
-	evitar que exista más de un temporizador simultáneo, por lo que debería guardarse
-	el resultado de la llamada a setInterval en alguna variable para llamar oportunamente
-	a clearInterval en su caso.   
-*/
+}
 
 function arrancarTiempo() {
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
   if (temporizador) clearInterval(temporizador);
   let hms = function () {
     let seg = Math.trunc(segundos % 60);
@@ -187,29 +150,14 @@ function arrancarTiempo() {
   temporizador = setInterval(hms, 1000);
 } // arrancarTiempo
 
-/**
-	Si mazo es un array de elementos <img>, en esta rutina debe ser
-	reordenado aleatoriamente. Al ser un array un objeto, se pasa
-	por referencia, de modo que si se altera el orden de dicho array
-	dentro de la rutina, esto aparecerá reflejado fuera de la misma.
-*/
 function barajar(mazo) {
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
   for (let i = mazo.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [mazo[i], mazo[j]] = [mazo[j], mazo[i]];
   }
 } // barajar
 
-/**
- 	En el elemento HTML que representa el tapete inicial (variable tapeteInicial)
-	se deben añadir como hijos todos los elementos <img> del array mazo.
-	Antes de añadirlos, se deberían fijar propiedades como la anchura, la posición,
-	coordenadas top y left, algun atributo de tipo data-...
-	Al final se debe ajustar el contador de cartas a la cantidad oportuna
-*/
 function cargarTapeteInicial(mazo) {
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
   for (let i = 0; i < mazo.length; i++) {
     const desplazamiento = paso * i;
     mazo[i].style.position = "absolute";
@@ -229,7 +177,6 @@ function cargarTapeteInicial(mazo) {
    	del elemento que actúa de contador
 */
 function incContador(contador) {
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
   valor = contador++;
   setContador(contador, valor);
 } // incContador
@@ -238,7 +185,6 @@ function incContador(contador) {
 	Idem que anterior, pero decrementando 
 */
 function decContador(contador) {
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! ***/
   contador--;
 } // decContador
 
@@ -247,7 +193,6 @@ function decContador(contador) {
 	valor especificado
 */
 function setContador(contador, valor) {
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
   contador.textContent = valor;
 } // setContador
 
@@ -386,13 +331,16 @@ for (let i = 0; i < tapetesReceptores.length; i++) {
   };
 }
 
+// Funcion adicional para notificar al usuario su tiempo y cantidad de movimientos realizados.
 function modalVictoria() {
   const section = document.querySelector("section");
   const closeBtn = document.querySelector(".close-btn");
   const greatBtn = document.querySelector(".great-btn");
   const mensaje = document.getElementById("informacion");
   const iconoSpan = document.getElementById("icono");
-  mensaje.innerHTML = `¡Felicitaciones! Has ganado el juego en "<strong>${contTiempo.textContent}</strong>" con "<strong>${contMovimientos.textContent}</strong>" movimientos.`;
+  mensaje.innerHTML = `¡Felicitaciones! Has ganado el juego en 
+                        "<strong>${contTiempo.textContent}</strong>" con "<strong>
+                        ${contMovimientos.textContent}</strong>" movimientos.`;
   iconoSpan.textContent = "😃";
   iconoSpan.style.fontSize = "30px";
   section.classList.add("active");
