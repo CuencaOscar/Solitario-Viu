@@ -6,7 +6,7 @@ A single-player card game that runs in the browser, built with **HTML5 drag and 
 **vanilla JavaScript**, with no frameworks. Developed for the Master's in Web Applications and Services Development
 at Universidad Internacional de Valencia (VIU).
 
-![JavaScript](https://img.shields.io/badge/JavaScript_ES6-F7DF1E?logo=javascript&logoColor=black)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 
