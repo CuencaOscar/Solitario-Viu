@@ -10,10 +10,7 @@ at Universidad Internacional de Valencia (VIU).
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 
-<p align="center">
-  <img src="imagenes/solitario_start.png" alt="Game start" width="420">
-  <img src="imagenes/solitario_win.png" alt="Victory screen" width="420">
-</p>
+![Game start and victory screen](docs/screenshots.png)
 
 ## How to play
 
