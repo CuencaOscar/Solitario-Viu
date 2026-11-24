@@ -6,6 +6,8 @@ A single-player card game that runs in the browser, built with **HTML5 drag and 
 **vanilla JavaScript**, with no frameworks. Developed for the Master's in Web Applications and Services Development
 at Universidad Internacional de Valencia (VIU).
 
+**▶ Play it online: [cuencaoscar.github.io/Solitario-Viu](https://cuencaoscar.github.io/Solitario-Viu/)**
+
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
@@ -31,7 +33,8 @@ foundation piles, **from 12 down to 1**.
 
 ## Run it
 
-No build step or dependencies: clone the repository and open `solitario.html` in any modern browser.
+Play it at [cuencaoscar.github.io/Solitario-Viu](https://cuencaoscar.github.io/Solitario-Viu/), or clone the repository and open
+`solitario.html` in any modern browser (no build step or dependencies).
 
 ```
 css/solitario.css   # Board and card styles
