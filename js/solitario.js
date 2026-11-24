@@ -99,7 +99,7 @@ function comenzarJuego() {
       let img_carta = document.createElement("img");
       img_carta.id = "carta";
       img_carta.src =
-        "../imagenes/baraja/" + numeros[j] + "-" + palos[i] + ".png";
+        "imagenes/baraja/" + numeros[j] + "-" + palos[i] + ".png";
       img_carta.setAttribute("data-palo", palos[i]);
       img_carta.setAttribute("data-numero", numeros[j]);
       img_carta.setAttribute("data-color", colores[palos[i]]);
