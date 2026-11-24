@@ -12,17 +12,20 @@ at Universidad Internacional de Valencia (VIU).
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 
-![Game start and victory screen](docs/screenshots.png)
+<p align="center"><img src="docs/demo.gif" alt="Playing the first moves with drag and drop: kings to the foundations, other cards to the discard pile" width="620"></p>
 
 ## How to play
 
-The deck has 48 cards: four suits numbered 1 to 12. The goal is to build each suit on one of the four
-foundation piles, **from 12 down to 1**.
+The deck has 48 cards: four suits numbered 1 to 12, two orange and two grey. The goal is to move every card to
+the four foundation piles, each one built **from 12 down to 1 alternating colours**.
 
-1. Drag the top card of the initial pile to a foundation (it must be the next card of that suit) or to the
-   discard pile.
+1. Drag the top card of the initial pile to a foundation (a 12 starts an empty pile; otherwise it must be one lower
+   than the top card and of the other colour) or to the discard pile. The top card of the discard pile can also be
+   played to a foundation.
 2. When the initial pile runs out, the discard pile is shuffled back in.
 3. You win when the four foundations are complete.
+
+![Game start and victory screen](docs/screenshots.png)
 
 ## Features
 
