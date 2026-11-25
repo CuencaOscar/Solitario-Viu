@@ -25,7 +25,7 @@ the four foundation piles, each one built **from 12 down to 1 alternating colour
 2. When the initial pile runs out, the discard pile is shuffled back in.
 3. You win when the four foundations are complete.
 
-![Game start and victory screen](docs/screenshots.png)
+![New game and a game in progress](docs/screenshots.png)
 
 ## Features
 
