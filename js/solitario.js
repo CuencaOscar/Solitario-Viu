@@ -17,6 +17,16 @@ let colores = {
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
 
+// Card size in the deck (the card images are 300×407).
+const ANCHO_CARTA = 65;
+const ALTO_CARTA = Math.round((ANCHO_CARTA * 407) / 300);
+
+/** Step between cards of the deck fan: tighter on small screens so the fan fits its pile. */
+function pasoAbanico(numCartas) {
+  const libre = Math.min(tapeteInicial.clientWidth - ANCHO_CARTA, tapeteInicial.clientHeight - ALTO_CARTA) - 16;
+  return Math.max(2, Math.min(paso, libre / Math.max(1, numCartas - 1)));
+}
+
 // contador_de_movimientos
 let movimientos = 0;
 
@@ -158,12 +168,17 @@ function barajar(mazo) {
 } // barajar
 
 function cargarTapeteInicial(mazo) {
+  // Centre the diagonal fan inside the deck pile, whatever its size.
+  const paso_actual = pasoAbanico(mazo.length);
+  const abanico = paso_actual * Math.max(0, mazo.length - 1);
+  const inicioX = Math.max(0, (tapeteInicial.clientWidth - ANCHO_CARTA - abanico) / 2);
+  const inicioY = Math.max(0, (tapeteInicial.clientHeight - ALTO_CARTA - abanico) / 2);
   for (let i = 0; i < mazo.length; i++) {
-    const desplazamiento = paso * i;
+    const desplazamiento = paso_actual * i;
     mazo[i].style.position = "absolute";
-    mazo[i].style.width = "65px";
-    mazo[i].style.top = desplazamiento + "px";
-    mazo[i].style.left = desplazamiento + "px";
+    mazo[i].style.width = ANCHO_CARTA + "px";
+    mazo[i].style.top = inicioY + desplazamiento + "px";
+    mazo[i].style.left = inicioX + desplazamiento + "px";
     mazo[i].style.setProperty("transform", "translate(0)");
     mazo[i].setAttribute("data-tapete", "receptor");
     mazo[i].id = "carta-" + (i + 1);
