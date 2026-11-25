@@ -12,7 +12,7 @@ at Universidad Internacional de Valencia (VIU).
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 
-<p align="center"><img src="docs/demo.gif" alt="Playing the first moves with drag and drop: twelves to the foundations, other cards to the discard pile" width="760"></p>
+<p align="center"><img src="docs/demo-v2.gif" alt="Playing the first moves with drag and drop: twelves to the foundations, other cards to the discard pile" width="760"></p>
 
 ## How to play
 
@@ -25,7 +25,7 @@ the four foundation piles, each one built **from 12 down to 1 alternating colour
 2. When the initial pile runs out, the discard pile is shuffled back in.
 3. You win when the four foundations are complete.
 
-![New game and a game in progress](docs/screenshots.png)
+![New game and a game in progress](docs/screenshots-v2.png)
 
 ## Features
 
