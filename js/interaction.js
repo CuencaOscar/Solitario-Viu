@@ -1,9 +1,10 @@
 /**
- * Interaction layer on top of solitario.js:
- *  - touch drag and drop (HTML5 drag and drop does not fire on phones and tablets),
- *  - highlight of the pile under the card while dragging,
- *  - feedback when a move is not allowed, instead of the card silently going back.
- * It reuses the game's own drop handlers, so the rules live in one place.
+ * Drag and drop for Solitaire built on Pointer Events, so it behaves the same with a mouse,
+ * a finger or a pen (native HTML5 drag and drop is unreliable on touch screens and some setups).
+ *  - the card follows the pointer as a floating copy,
+ *  - the pile under the pointer is highlighted,
+ *  - on release the pile's own drop handler from solitario.js runs, so the rules live in one place,
+ *  - a move that is not allowed shakes the pile and explains why.
  */
 (function () {
   const piles = ["sobrantes", "receptor1", "receptor2", "receptor3", "receptor4"].map((id) =>
@@ -11,8 +12,8 @@
   );
   const hint = document.querySelector(".hint");
   const defaultHint = hint.textContent;
-  let movesBefore = 0;
   let hintTimer = null;
+  let drag = null; // { card, ghost, pointerId, offsetX, offsetY, startX, startY, moved }
 
   function showHint(text, isError) {
     hint.textContent = text;
@@ -21,112 +22,101 @@
     hintTimer = setTimeout(() => {
       hint.textContent = defaultHint;
       hint.classList.remove("hint--error");
-    }, 2600);
+    }, 2800);
   }
 
   function rejectionMessage(pile, card) {
     if (pile.id === "sobrantes") {
-      return "Cards from the discard pile can only go to a foundation.";
+      return card.dataset.tapete === "sobrantes"
+        ? "That card is already on the discard pile: move it to a foundation."
+        : "That card could not be placed on the discard pile.";
     }
     const cards = pile.querySelectorAll("img");
-    if (cards.length === 0) {
-      return "An empty foundation only takes a 12.";
-    }
+    if (cards.length === 0) return "An empty foundation only takes a 12.";
     const top = cards[cards.length - 1];
     return `On a ${top.dataset.numero} you can only place a ${top.dataset.numero - 1} of the other colour.`;
   }
 
-  /** Called after the game's own drop handler: tell the player when nothing moved. */
-  function afterDrop(pile, card) {
-    pile.classList.remove("is-over");
-    if (movimientos === movesBefore && card) {
+  function pileAt(x, y) {
+    const hidden = drag && drag.ghost;
+    if (hidden) hidden.style.display = "none";
+    const el = document.elementFromPoint(x, y);
+    if (hidden) hidden.style.display = "";
+    return el ? piles.find((pile) => pile.contains(el)) : undefined;
+  }
+
+  function highlight(pile) {
+    piles.forEach((p) => p.classList.toggle("is-over", p === pile));
+  }
+
+  // The native drag would compete with the pointer-based one.
+  document.addEventListener("dragstart", (e) => {
+    if (e.target.closest && e.target.closest(".tapete")) e.preventDefault();
+  });
+
+  document.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0 && e.pointerType === "mouse") return;
+    const card = e.target.closest(".tapete img");
+    if (!card || card.getAttribute("draggable") !== "true") return;
+    e.preventDefault();
+    const rect = card.getBoundingClientRect();
+    drag = {
+      card,
+      ghost: null,
+      pointerId: e.pointerId,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+      width: rect.width,
+      startX: e.clientX,
+      startY: e.clientY,
+      moved: false,
+    };
+  });
+
+  document.addEventListener("pointermove", (e) => {
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    if (!drag.moved && Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) < 4) return;
+    e.preventDefault();
+    if (!drag.moved) {
+      drag.moved = true;
+      drag.ghost = drag.card.cloneNode();
+      drag.ghost.removeAttribute("id");
+      drag.ghost.className = "drag-ghost";
+      drag.ghost.style.width = `${drag.width}px`;
+      document.body.appendChild(drag.ghost);
+      drag.card.classList.add("is-dragging");
+    }
+    drag.ghost.style.left = `${e.clientX - drag.offsetX}px`;
+    drag.ghost.style.top = `${e.clientY - drag.offsetY}px`;
+    highlight(pileAt(e.clientX, e.clientY));
+  });
+
+  function endDrag(e, cancelled) {
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    const { card, ghost, moved } = drag;
+    const pile = moved && !cancelled ? pileAt(e.clientX, e.clientY) : undefined;
+    if (ghost) ghost.remove();
+    card.classList.remove("is-dragging");
+    highlight(undefined);
+    drag = null;
+    if (!pile || typeof pile.ondrop !== "function") return;
+
+    const data = {
+      "text/plain/id": card.id,
+      "text/plain/numero": card.dataset.numero,
+      "text/plain/palo": card.dataset.palo,
+      "text/plain/color": card.dataset.color,
+      "text/plain/tapete": card.dataset.tapete,
+    };
+    const movesBefore = movimientos;
+    pile.ondrop({ preventDefault() {}, dataTransfer: { getData: (key) => data[key] || "" } });
+    if (movimientos === movesBefore) {
       pile.classList.add("is-invalid");
       setTimeout(() => pile.classList.remove("is-invalid"), 450);
       showHint(rejectionMessage(pile, card), true);
     }
   }
 
-  // Mouse: HTML5 drag and drop (the game sets the data in its dragstart handlers).
-  let draggedCard = null;
-  document.addEventListener("dragstart", (e) => {
-    draggedCard = e.target.closest("img");
-    movesBefore = movimientos;
-  });
-  document.addEventListener("dragend", () => {
-    piles.forEach((pile) => pile.classList.remove("is-over"));
-  });
-  piles.forEach((pile) => {
-    pile.addEventListener("dragenter", () => pile.classList.add("is-over"));
-    pile.addEventListener("dragleave", (e) => {
-      if (!pile.contains(e.relatedTarget)) pile.classList.remove("is-over");
-    });
-    pile.addEventListener("drop", () => afterDrop(pile, draggedCard));
-  });
-
-  // Touch: follow the finger with a ghost card and reuse the pile's ondrop handler.
-  let ghost = null;
-  let touchCard = null;
-
-  function pileAt(x, y) {
-    const el = document.elementFromPoint(x, y);
-    return el ? piles.find((pile) => pile.contains(el)) : undefined;
-  }
-
-  document.addEventListener(
-    "touchstart",
-    (e) => {
-      const card = e.target.closest(".tapete img");
-      if (!card || card.getAttribute("draggable") !== "true") return;
-      e.preventDefault();
-      touchCard = card;
-      movesBefore = movimientos;
-      const rect = card.getBoundingClientRect();
-      ghost = card.cloneNode();
-      ghost.removeAttribute("id");
-      ghost.className = "drag-ghost";
-      ghost.style.width = `${rect.width}px`;
-      document.body.appendChild(ghost);
-      moveGhost(e.touches[0]);
-      card.style.opacity = "0.35";
-    },
-    { passive: false }
-  );
-
-  function moveGhost(touch) {
-    ghost.style.left = `${touch.clientX}px`;
-    ghost.style.top = `${touch.clientY}px`;
-    piles.forEach((pile) => pile.classList.toggle("is-over", pile === pileAt(touch.clientX, touch.clientY)));
-  }
-
-  document.addEventListener(
-    "touchmove",
-    (e) => {
-      if (!ghost) return;
-      e.preventDefault();
-      moveGhost(e.touches[0]);
-    },
-    { passive: false }
-  );
-
-  document.addEventListener("touchend", (e) => {
-    if (!ghost) return;
-    const touch = e.changedTouches[0];
-    const pile = pileAt(touch.clientX, touch.clientY);
-    ghost.remove();
-    ghost = null;
-    touchCard.style.opacity = "";
-    if (pile && typeof pile.ondrop === "function") {
-      const data = {
-        "text/plain/id": touchCard.id,
-        "text/plain/numero": touchCard.dataset.numero,
-        "text/plain/palo": touchCard.dataset.palo,
-        "text/plain/color": touchCard.dataset.color,
-        "text/plain/tapete": touchCard.dataset.tapete,
-      };
-      pile.ondrop({ preventDefault() {}, dataTransfer: { getData: (key) => data[key] || "" } });
-      afterDrop(pile, touchCard);
-    }
-    piles.forEach((p) => p.classList.remove("is-over"));
-    touchCard = null;
-  });
+  document.addEventListener("pointerup", (e) => endDrag(e, false));
+  document.addEventListener("pointercancel", (e) => endDrag(e, true));
 })();

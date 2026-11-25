@@ -223,6 +223,9 @@ div.tapete.receptor::before {
 div.tapete img {
   border-radius: 7px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+div.tapete img[draggable="true"] {
   cursor: grab;
 }
 
@@ -428,17 +431,27 @@ div.tapete.is-invalid {
   font-weight: 600;
 }
 
+/* Cards are dragged with Pointer Events (js/interaction.js): no scrolling or text selection while dragging. */
+div#mesa {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 div.tapete img {
   touch-action: none;
-  -webkit-user-drag: element;
-  user-select: none;
+}
+
+div.tapete img.is-dragging {
+  opacity: 0.3;
 }
 
 .drag-ghost {
   position: fixed;
   z-index: 300;
   pointer-events: none;
-  transform: translate(-50%, -60%) rotate(-4deg) scale(1.08);
+  transform: rotate(-3deg) scale(1.06);
+  transform-origin: center;
   border-radius: 7px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+  cursor: grabbing;
 }
