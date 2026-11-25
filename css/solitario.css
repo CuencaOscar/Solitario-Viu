@@ -13,6 +13,11 @@
   box-sizing: border-box;
 }
 
+html {
+  min-height: 100%;
+  background-color: var(--felt-dark);
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -325,18 +330,115 @@ section.active .modal-box {
 }
 
 @media (max-width: 760px) {
+  body {
+    background-attachment: scroll;
+  }
+
   .topbar {
     justify-content: center;
     text-align: center;
+    padding: 18px 12px 4px;
+  }
+
+  .brand {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stats {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .stat {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .stats button {
+    white-space: nowrap;
+    padding: 12px 14px;
+  }
+
+  .board {
+    padding: 0 12px;
   }
 
   div#mesa {
-    padding: 20px;
-    gap: 24px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 12px 28px;
+    gap: 22px;
+  }
+
+  .tapetes_superiores {
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
   }
 
   div.tapete#inicial {
-    width: 320px;
-    height: 320px;
+    width: 310px;
+    height: 310px;
   }
+
+  .foundations {
+    align-self: center;
+  }
+
+  .foundations__row {
+    grid-template-columns: repeat(4, 70px);
+    gap: 12px;
+  }
+
+  div.tapete:not(#inicial) {
+    width: 70px;
+    height: 96px;
+  }
+
+  div.tapete:not(#inicial) img {
+    width: 56px !important;
+  }
+}
+
+/* Drag feedback */
+div.tapete.is-over {
+  border-style: solid;
+  border-color: #fde047;
+  background: rgba(253, 224, 71, 0.12);
+}
+
+div.tapete.is-invalid {
+  border-color: #f87171;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+}
+
+.hint {
+  transition: color 0.2s ease;
+}
+
+.hint--error {
+  color: #fecaca;
+  font-weight: 600;
+}
+
+div.tapete img {
+  touch-action: none;
+  -webkit-user-drag: element;
+  user-select: none;
+}
+
+.drag-ghost {
+  position: fixed;
+  z-index: 300;
+  pointer-events: none;
+  transform: translate(-50%, -60%) rotate(-4deg) scale(1.08);
+  border-radius: 7px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
 }
