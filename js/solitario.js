@@ -338,11 +338,10 @@ function modalVictoria() {
   const greatBtn = document.querySelector(".great-btn");
   const mensaje = document.getElementById("informacion");
   const iconoSpan = document.getElementById("icono");
-  mensaje.innerHTML = `¡Felicitaciones! Has ganado el juego en 
-                        "<strong>${contTiempo.textContent}</strong>" con "<strong>
-                        ${contMovimientos.textContent}</strong>" movimientos.`;
-  iconoSpan.textContent = "😃";
-  iconoSpan.style.fontSize = "30px";
+  mensaje.innerHTML = `You cleared the table in <strong>${contTiempo.textContent}</strong>
+                        with <strong>${contMovimientos.textContent}</strong> moves.`;
+  iconoSpan.textContent = "🎉";
+  iconoSpan.style.fontSize = "40px";
   section.classList.add("active");
   closeBtn.addEventListener("click", () => section.classList.remove("active"));
   greatBtn.addEventListener("click", () => {

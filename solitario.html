@@ -1,57 +1,73 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
-    <title>Solitario VIU</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solitaire · VIU</title>
+    <meta name="description" content="Single-player card game with drag and drop, built with HTML5, CSS and vanilla JavaScript.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/solitario.css">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 </head>
 
 <body>
-    <div class="central">
-        <section>
-            <span class="overlay"></span>
-            <div class="modal-box">
-                <i class="fa-regular fa-circle-check"></i>
-                <h2>Juego Completado</h2>
-                <span id="icono"></span>
-                <h3 id="informacion"></h3>
-                <div class="buttons">
-                    <button class="close-btn">Ok, Close</button>
-                    <button class="great-btn">Play Again</button>
-                </div>
+    <section>
+        <span class="overlay"></span>
+        <div class="modal-box" role="dialog" aria-labelledby="modal-title">
+            <span id="icono"></span>
+            <h2 id="modal-title">You won!</h2>
+            <p id="informacion"></p>
+            <div class="buttons">
+                <button class="close-btn btn-secondary">Close</button>
+                <button class="great-btn">Play again</button>
             </div>
-        </section>
-
-        <div class="cabecera">
-            <h1 id="titulo">Juego del solitario</h1>
-            <img id="logo" src="imagenes/logoVIU.png" alt="">
         </div>
+    </section>
 
-        <h2 id="marcadores">
-            <span>Tiempo: <span id="contador_tiempo"></span></span>
-            <span style="display:inline-block; width:200px"></span>
-            <span>Movimientos: <span id="contador_movimientos" class=""></span></span>
-        </h2>
+    <header class="topbar">
+        <div class="brand">
+            <img id="logo" src="imagenes/icon-spade.png" alt="">
+            <div>
+                <h1 id="titulo">Solitaire</h1>
+                <p>Build each foundation from 12 down to 1, alternating colours.</p>
+            </div>
+        </div>
+        <div id="marcadores" class="stats">
+            <div class="stat"><span class="stat__label">Time</span><span id="contador_tiempo" class="stat__value"></span></div>
+            <div class="stat"><span class="stat__label">Moves</span><span id="contador_movimientos" class="stat__value"></span></div>
+            <button id="reset">New game</button>
+        </div>
+    </header>
 
+    <main class="board">
         <div id="mesa">
             <div class="tapetes_superiores">
-                <div id="inicial" class="tapete"><span id="contador_inicial" class="contador">0</span></div>
-                <div id="sobrantes" class="tapete"><span id="contador_sobrantes" class="contador">0</span></div>
+                <div class="slot">
+                    <span class="slot__label">Deck</span>
+                    <div id="inicial" class="tapete"><span id="contador_inicial" class="contador">0</span></div>
+                </div>
+                <div class="slot">
+                    <span class="slot__label">Discard</span>
+                    <div id="sobrantes" class="tapete"><span id="contador_sobrantes" class="contador">0</span></div>
+                </div>
             </div>
-            <div id="receptor1" class="tapete receptor"><span id="contador_receptor1" class="contador">0</span></div>
-            <div id="receptor2" class="tapete receptor"><span id="contador_receptor2" class="contador">0</span></div>
-            <div id="receptor3" class="tapete receptor"><span id="contador_receptor3" class="contador">0</span></div>
-            <div id="receptor4" class="tapete receptor"><span id="contador_receptor4" class="contador">0</span></div>
+            <div class="foundations">
+                <span class="slot__label">Foundations</span>
+                <div class="foundations__row">
+                    <div id="receptor1" class="tapete receptor"><span id="contador_receptor1" class="contador">0</span></div>
+                    <div id="receptor2" class="tapete receptor"><span id="contador_receptor2" class="contador">0</span></div>
+                    <div id="receptor3" class="tapete receptor"><span id="contador_receptor3" class="contador">0</span></div>
+                    <div id="receptor4" class="tapete receptor"><span id="contador_receptor4" class="contador">0</span></div>
+                </div>
+            </div>
         </div>
+        <p class="hint">Drag the top card of the deck onto a foundation or the discard pile. Foundations start with a 12.</p>
+    </main>
 
-        <button id="reset" class="btn btn-danger">Reiniciar</button>
-    </div> <!-- class="central" -->
+    <footer class="footer">Master's in Web Applications and Services · Universidad Internacional de Valencia</footer>
     <script src="js/solitario.js"></script>
 </body>
 

@@ -1,167 +1,342 @@
-/**
-	Especificaciones CSS para el juego del solitario 
-*/
+/* Solitaire · VIU — felt table theme. The game logic only relies on the element ids. */
 
-/* /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! 
-	Completar los estilos que faltan y modificar al gusto del alumno
-**/
+:root {
+  --felt: #13603d;
+  --felt-dark: #0a3b26;
+  --accent: #e65014;
+  --text: #f8fafc;
+  --muted: rgba(248, 250, 252, 0.65);
+  --slot-border: rgba(255, 255, 255, 0.28);
+}
 
-/* Todos los contadores estarán ubicados en la parte inferior 
-   derecha (position absolute) de los respectivos tapetes (position relative).
-*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(255, 255, 255, 0.12), transparent 55%),
+    radial-gradient(circle at 50% 40%, var(--felt), var(--felt-dark) 75%);
+  background-attachment: fixed;
+}
+
+/* Header */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 24px 8px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+img#logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+}
+
+h1#titulo {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.brand p {
+  margin: 2px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  min-width: 96px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat__value {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: var(--accent);
+  box-shadow: 0 6px 16px rgba(230, 80, 20, 0.35);
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.2s ease;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Table */
+.board {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 1040px;
+  margin: 16px auto;
+  padding: 0 24px;
+}
+
+div#mesa {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 32px;
+  border-radius: 28px;
+  background: rgba(0, 0, 0, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 2px 30px rgba(0, 0, 0, 0.25);
+}
+
+.tapetes_superiores {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.slot,
+.foundations {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.slot__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.foundations {
+  align-self: flex-end;
+}
+
+.foundations__row {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+  gap: 18px;
+}
+
+/* All piles are position: relative so the cards (absolute <img>) stack inside them. */
+div.tapete {
+  position: relative;
+  border-radius: 12px;
+  border: 2px dashed var(--slot-border);
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+}
+
+div.tapete#inicial {
+  width: 340px;
+  height: 340px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+div.tapete:not(#inicial) {
+  width: 100px;
+  height: 125px;
+}
+
+div.tapete#sobrantes {
+  border-color: rgba(147, 197, 253, 0.45);
+}
+
+div.tapete.receptor {
+  border-color: rgba(253, 224, 71, 0.45);
+}
+
+div.tapete.receptor::before {
+  content: "12";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.12);
+}
+
+div.tapete img {
+  border-radius: 7px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  cursor: grab;
+}
+
+div.tapete img[draggable="true"]:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 0 0 3px rgba(253, 224, 71, 0.85), 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Card counters: small chip in the bottom-right corner of each pile. */
 .contador {
-    position: absolute;
-    bottom: 0px;
-    right: 3px;
-  }
-  
-  div.cabecera {
-    display: flex;
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  z-index: 100;
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  color: #0a3b26;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.hint {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.footer {
+  padding: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Victory modal */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 20, 12, 0.6);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 200;
+}
+
+section.active .overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(380px, 90vw);
+  padding: 32px 24px 24px;
+  border-radius: 20px;
+  background: #fff;
+  color: #0f172a;
+  text-align: center;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1.1);
+  transition: all 0.3s ease;
+  z-index: 201;
+}
+
+section.active .modal-box {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-box h2 {
+  margin: 10px 0 6px;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.modal-box p {
+  margin: 0 0 20px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.modal-box .buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-box .btn-secondary {
+  color: #0f172a;
+  background: #f1f5f9;
+  box-shadow: none;
+}
+
+@media (max-width: 760px) {
+  .topbar {
     justify-content: center;
-  }
-  
-  /* Centrado del título y color */
-  h1#titulo {
-    text-align: center;
-    color: #e65014;
-  }
-  
-  /* Estilos de la imagen junto a su titulo */
-  img#logo {
-    width: 150px;
-  }
-  
-  /* Centrado de los marcadores de tiempo y movimientos */
-  h2#marcadores {
     text-align: center;
   }
-  
-  /* Mesa que contiene a los tapetes centrados */
+
   div#mesa {
-    text-align: center;
-    margin: 20px;
+    padding: 20px;
+    gap: 24px;
   }
-  
-  div.central {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  /* Todos los tapetes con position relative para que
-     los respectivos mazos (arrays de <img>) puedan
-     posicionarse de manera absoluta respecto a ellos */
-  div.tapete {
-    display: inline-block;
-    position: relative;
-    margin: 10px;
-    z-index: 1;
-  }
-  
-  /* Dimensiones y color de fondo para el tapete inicial */
+
   div.tapete#inicial {
-    width: 340px;
-    height: 340px;
-    background-color: lightgrey;
+    width: 320px;
+    height: 320px;
   }
-  
-  /* Dimensiones para todos los tapetes salvo el inicial */
-  div.tapete:not(#inicial) {
-    height: 125px;
-    width: 100px;
-  }
-  
-  /* Color de fondo para el tapete de las cartas sobrantes */
-  div.tapete#sobrantes {
-    background-color: lightblue;
-  }
-  
-  /* Color de fondo de los tapetes receptores */
-  div.tapete.receptor {
-    background-color: lightgreen;
-  }
-  
-  button {
-    font-size: 18px;
-    font-weight: 400;
-    color: #fff;
-    padding: 14px 22px;
-    border: none;
-    background: #e65014;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  button.show-modal,
-  .modal-box {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  section.active .show-modal {
-    display: none;
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 2;
-  }
-  
-  section.active .overlay {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  
-  .modal-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 380px;
-    width: 100%;
-    padding: 30px 20px;
-    border-radius: 8px;
-    background-color: #fff;
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, -50%) scale(1.2);
-    transition: all 0.3s ease;
-    z-index: 2;
-  }
-  
-  section.active .modal-box {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  
-  .modal-box h2 {
-    margin-top: 20px;
-    font-size: 25px;
-    font-weight: 500;
-    color: #e65014;
-  }
-  
-  .modal-box button {
-    font-size: 16px;
-    padding: 10px 20px;
-    background-color: #e65014;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .modal-box button:hover {
-    background-color: #f2764a;
-  }
-  
+}
