@@ -334,20 +334,19 @@ for (let i = 0; i < tapetesReceptores.length; i++) {
 // Funcion adicional para notificar al usuario su tiempo y cantidad de movimientos realizados.
 function modalVictoria() {
   const section = document.querySelector("section");
-  const closeBtn = document.querySelector(".close-btn");
-  const greatBtn = document.querySelector(".great-btn");
   const mensaje = document.getElementById("informacion");
-  const iconoSpan = document.getElementById("icono");
-  mensaje.innerHTML = `You cleared the table in <strong>${contTiempo.textContent}</strong>
-                        with <strong>${contMovimientos.textContent}</strong> moves.`;
-  iconoSpan.textContent = "🎉";
-  iconoSpan.style.fontSize = "40px";
+  mensaje.innerHTML = `You cleared the table. Well played!
+    <span class="win-stats">
+      <span class="stat"><span class="stat__label">Time</span><span class="stat__value">${contTiempo.textContent}</span></span>
+      <span class="stat"><span class="stat__label">Moves</span><span class="stat__value">${contMovimientos.textContent}</span></span>
+    </span>`;
   section.classList.add("active");
-  closeBtn.addEventListener("click", () => section.classList.remove("active"));
-  greatBtn.addEventListener("click", () => {
+  // Assigned (not added) so a second win in the same session does not stack handlers.
+  document.querySelector(".close-btn").onclick = () => section.classList.remove("active");
+  document.querySelector(".great-btn").onclick = () => {
     section.classList.remove("active");
     resetearJuego();
-  });
+  };
 }
 
 document.getElementById("reset").onclick = resetearJuego;
