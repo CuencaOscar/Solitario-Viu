@@ -29,8 +29,8 @@ the four foundation piles, each one built **from 12 down to 1 alternating colour
 
 ## Features
 
-- Shuffled deck on every game and drag-and-drop card movement.
-- Rule validation on each drop.
+- Shuffled deck on every game; cards are dragged with Pointer Events, so it works with a mouse or a finger.
+- Rule validation on each drop, with the target pile highlighted and a message when a move is not allowed.
 - Timer and move counter.
 - Restart button and victory message.
 
